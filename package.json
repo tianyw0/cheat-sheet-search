@@ -3,7 +3,7 @@
   "name": "search-with-algolia",
   "title": "Search with Algolia",
   "description": "This extension allows to search through an Algolia index directly from Raycast.",
-  "icon": "command-icon.png",
+  "icon": "algolia-icon.png",
   "author": "valentindotxyz",
   "contributors": [
     "TianYongwei"
