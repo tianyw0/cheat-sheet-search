@@ -1,13 +1,10 @@
 {
   "$schema": "https://www.raycast.com/schemas/extension.json",
-  "name": "search-with-algolia",
-  "title": "Search with Algolia",
-  "description": "This extension allows to search through an Algolia index directly from Raycast.",
+  "name": "cheatsheet-search",
+  "title": "Cheatsheet with full text search",
+  "description": "This extension allows to search through an fulltext index directly from Raycast.",
   "icon": "algolia-icon.png",
-  "author": "valentindotxyz",
-  "contributors": [
-    "TianYongwei"
-  ],
+  "author": "TianYongwei",
   "license": "MIT",
   "scripts": {
     "build": "ray build -e dist",
@@ -16,9 +13,9 @@
   "commands": [
     {
       "name": "index",
-      "title": "Search",
-      "subtitle": "Algolia",
-      "description": "Search through an Algolia index directly from Raycast.",
+      "title": "Search Cheatsheet",
+      "subtitle": "Cheatsheet",
+      "description": "Search through an fulltext index directly from Raycast.",
       "mode": "view",
       "preferences": [
         {
@@ -45,7 +42,8 @@
         {
           "name": "mainAttribute",
           "type": "textfield",
-          "required": true,
+          "required": false,
+          "default": "title",
           "title": "Main Attribute",
           "description": "The main attribute from your records you want to display in search results."
         },
@@ -53,14 +51,16 @@
           "name": "secondaryAttribute",
           "type": "textfield",
           "required": false,
+          "default": "desc",
           "title": "Secondary Attribute",
           "description": "A secondary attribute from your records you want to display in search results (optional)."
         },
         {
-          "name": "urlAttribute",
+          "name": "tertiaryAttribute",
           "type": "textfield",
           "required": false,
-          "title": "URL Attribute",
+          "default": "examples",
+          "title": "Tertiary Attribute",
           "description": "If your record contains an URL that you'd like to open (optional)."
         }
       ]

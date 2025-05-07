@@ -1,6 +1,7 @@
-import { ActionPanel, Action, Detail, getPreferenceValues, List, showToast, Toast, Icon } from "@raycast/api";
+import { ActionPanel, Action, Detail, getPreferenceValues, List, showToast, Toast, Icon, Grid } from "@raycast/api";
 import { useEffect, useMemo, useState } from "react";
 import algoliasearch from "algoliasearch/lite";
+import { stringify } from "querystring";
 
 export default function main() {
   const preferences = getPreferenceValues();
@@ -42,6 +43,16 @@ export default function main() {
   }
 
   return (
+    // <Grid
+    //   columns={3}
+    //   inset={Grid.Inset.Large}
+    //   filtering={false}
+    //   onSearchTextChange={async (query: string | undefined) => setSearchResults(await search(query))}
+    //   navigationTitle="Search Cheatsheet"
+    //   searchBarPlaceholder="Search your cheatsheets"
+    // >
+    //   {searchResults?.map((item) => <Grid.Item key={item.objectID} content={item.desc} />)}
+    // </Grid>
     <List
       throttle={true}
       isLoading={isLoading || searchResults === undefined}
@@ -56,7 +67,16 @@ export default function main() {
               const highlightedValue = result._highlightResult[preferences.mainAttribute].value;
               return convertHighlightToMarkdown(highlightedValue);
             })()}
-            subtitle={preferences.secondaryAttribute ? result[preferences.secondaryAttribute] : undefined}
+            subtitle={
+              result[preferences.secondaryAttribute]
+                ? result[preferences.secondaryAttribute]
+                : result[preferences.tertiaryAttribute]
+                    .map((item: string, index: number) => `${index + 1}. ${item}`)
+                    .join(",")
+            }
+            detail={
+              <List.Item.Detail markdown="![Illustration](https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png)" />
+            }
             actions={
               preferences.urlAttribute ? (
                 <ActionPanel title={result.name}>
