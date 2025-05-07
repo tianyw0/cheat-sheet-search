@@ -12,7 +12,9 @@ interface MeiliSearchResult {
 export default function main() {
   const preferences = getPreferenceValues();
 
-  const searchClient = instantMeiliSearch(preferences.host, preferences.apiKey);
+  const meiliIndex = instantMeiliSearch(preferences.host, preferences.apiKey).meiliSearchInstance.index(
+    preferences.indexName,
+  );
 
   const [searchResults, setSearchResults] = useState<MeiliSearchResult[] | undefined>();
   const [isLoading, setIsLoading] = useState(false);
@@ -21,10 +23,9 @@ export default function main() {
     setIsLoading(true);
 
     try {
-      const index = searchClient.meiliSearchInstance.index(preferences.indexName);
       // 请求 MeiliSearch 返回高亮结果
-      const result = await index.search(query, {
-        limit: 20, // 你可以根据需要调整 limit
+      const result = await meiliIndex.search(query, {
+        limit: parseInt(preferences.pageSize), // 你可以根据需要调整 limit
         attributesToHighlight: ["*"], // 确保请求高亮所有属性，或指定需要的属性
       });
       setIsLoading(false);

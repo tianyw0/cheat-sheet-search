@@ -71,6 +71,14 @@
           "required": false,
           "title": "URL Attribute",
           "description": "If your record contains an URL that you'd like to open (optional)."
+        },
+        {
+          "name": "pageSize",
+          "type": "textfield",
+          "required": false,
+          "default": "10",
+          "title": "page limit",
+          "description": "The number of results per page (optional)."
         }
       ]
     }
