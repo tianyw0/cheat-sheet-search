@@ -52,7 +52,8 @@ export default function main() {
       onSearchTextChange={async (query: string | undefined) => setSearchResults(await search(query))}
     >
       <List.Section title="Results">
-        {searchResults?.map((result) => {
+        {searchResults?.map((result, index) => {
+          // 添加 index 参数
           // 安全地获取 title
           let titleText = result[preferences.mainAttribute] || "No title"; // 默认值
           if (result._formatted && result._formatted[preferences.mainAttribute]) {
@@ -65,18 +66,17 @@ export default function main() {
             subtitleText = result[preferences.secondaryAttribute];
           } else if (preferences.tertiaryAttribute && Array.isArray(result[preferences.tertiaryAttribute])) {
             subtitleText = result[preferences.tertiaryAttribute]
-              .map((item: string, index: number) => `${index + 1}. ${item}`)
+              .map((item: string, idx: number) => `${idx + 1}. ${item}`)
               .join(" ");
           }
 
           return (
             <List.Item
               key={result.id}
-              icon={Icon.Dot}
-              title={convertHighlightToMarkdown(titleText)}
+              title={index + 1 + ". " + convertHighlightToMarkdown(titleText)}
               subtitle={subtitleText}
               actions={
-                preferences.urlAttribute && result.url ? (
+                result.url && preferences.urlAttribute ? (
                   <ActionPanel title={result.name || titleText}>
                     <Action.OpenInBrowser url={result.url} title="Open in Browser" />
                   </ActionPanel>
