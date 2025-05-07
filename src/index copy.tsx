@@ -1,16 +1,18 @@
 import { ActionPanel, Action, Detail, getPreferenceValues, List, showToast, Toast, Icon, Grid } from "@raycast/api";
 import { useEffect, useMemo, useState } from "react";
-import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
+import algoliasearch from "algoliasearch/lite";
+import { stringify } from "querystring";
 
 export default function main() {
   const preferences = getPreferenceValues();
 
-  // const algoliaClient = useMemo(() => {
-  //   return algoliasearch(preferences.appId, preferences.apiKey);
-  // }, [preferences.appId, preferences.apiKey]);
+  const algoliaClient = useMemo(() => {
+    return algoliasearch(preferences.appId, preferences.apiKey);
+  }, [preferences.appId, preferences.apiKey]);
 
-  // Create MeiliSearch client
-  const searchClient = instantMeiliSearch("http://localhost:7700", "aSampleMasterKey");
+  const algoliaIndex = useMemo(() => {
+    return algoliaClient.initIndex(preferences.indexName);
+  }, [algoliaClient, preferences.indexName]);
 
   const [searchResults, setSearchResults] = useState<any[] | undefined>();
   const [isLoading, setIsLoading] = useState(false);
@@ -18,17 +20,17 @@ export default function main() {
   const search = async (query = "") => {
     setIsLoading(true);
 
-    try {
-      setIsLoading(false);
-      const index = searchClient.meiliSearchInstance.index(preferences.indexName);
-      const result = await index.search(query, { limit: 1 });
-      console.log("=====", result.hits);
-      return result.hits;
-    } catch (err: any) {
-      setIsLoading(false);
-      showToast(Toast.Style.Failure, "MeiliSearch Error", err.message);
-      return [];
-    }
+    return await algoliaIndex
+      .search(query)
+      .then((res) => {
+        setIsLoading(false);
+        return res.hits;
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        showToast(Toast.Style.Failure, "Algolia Error", err.message);
+        return [];
+      });
   };
 
   useEffect(() => {

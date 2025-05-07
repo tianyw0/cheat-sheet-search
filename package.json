@@ -74,6 +74,7 @@
     }
   ],
   "dependencies": {
+    "@meilisearch/instant-meilisearch": "^0.26.0",
     "@raycast/api": "^1.97.1",
     "@raycast/utils": "^1.17.0",
     "algoliasearch": "^4.11.0"
