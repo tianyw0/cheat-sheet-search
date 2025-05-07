@@ -9,6 +9,10 @@
     "TianYongwei"
   ],
   "license": "MIT",
+  "scripts": {
+    "build": "ray build -e dist",
+    "dev": "ray develop"
+  },
   "commands": [
     {
       "name": "index",
@@ -74,9 +78,5 @@
     "eslint": "^9.22.0",
     "prettier": "^3.5.3",
     "typescript": "^5.8.2"
-  },
-  "scripts": {
-    "build": "ray build -e dist",
-    "dev": "ray develop"
   }
 }
