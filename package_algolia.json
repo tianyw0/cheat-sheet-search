@@ -1,7 +1,7 @@
 {
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "cheatsheet-search",
-  "title": "Cheatsheet with full-text search",
+  "title": "Cheatsheet with full text search",
   "description": "This extension allows to search through an fulltext index directly from Raycast.",
   "icon": "algolia-icon.png",
   "author": "TianYongwei",
@@ -19,10 +19,9 @@
       "mode": "view",
       "preferences": [
         {
-          "name": "host",
+          "name": "appId",
           "type": "textfield",
           "required": true,
-          "default": "http://localhost:7700",
           "title": "Application ID",
           "description": "You can find your Application ID from the Algolia Dashboard."
         },
@@ -35,16 +34,15 @@
         },
         {
           "name": "apiKey",
-          "type": "textfield",
+          "type": "password",
           "required": true,
-          "default": "aSampleMasterKey",
           "title": "Search API Key",
           "description": "You can find your Search API Key from the Algolia Dashboard."
         },
         {
           "name": "mainAttribute",
           "type": "textfield",
-          "required": true,
+          "required": false,
           "default": "title",
           "title": "Main Attribute",
           "description": "The main attribute from your records you want to display in search results."

@@ -1,5 +1,5 @@
 import { ActionPanel, Action, Detail, getPreferenceValues, List, showToast, Toast, Icon, Grid } from "@raycast/api";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
 
 // 定义一个更准确的 MeiliSearch 结果接口
@@ -12,7 +12,7 @@ interface MeiliSearchResult {
 export default function main() {
   const preferences = getPreferenceValues();
 
-  const searchClient = instantMeiliSearch("http://localhost:7700", "aSampleMasterKey");
+  const searchClient = instantMeiliSearch(preferences.host, preferences.apiKey);
 
   const [searchResults, setSearchResults] = useState<MeiliSearchResult[] | undefined>();
   const [isLoading, setIsLoading] = useState(false);
