@@ -61,6 +61,13 @@
           "required": false,
           "default": "examples",
           "title": "Tertiary Attribute",
+          "description": "A tertiary attribute from your records you want to display in search results (optional)."
+        },
+        {
+          "name": "urlAttribute",
+          "type": "textfield",
+          "required": false,
+          "title": "URL Attribute",
           "description": "If your record contains an URL that you'd like to open (optional)."
         }
       ]
